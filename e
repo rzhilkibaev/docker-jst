@@ -14,4 +14,4 @@ mkdir /opt/jrs
 cd /opt/jrs
 
 # run jst
-jst $@
+jst $@ --env=ci
