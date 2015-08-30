@@ -19,8 +19,10 @@ RUN apt-get update \
 # python3-docopt and python3-psutil above is to speed up jst install
 
 # maven
-RUN wget -qO- http://mirrors.ibiblio.org/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz | tar xz -C /opt \
-  && ln -s /opt/apache-maven-3.2.5/bin/mvn /usr/local/bin/mvn
+# buildomatic requires maven to be installed in /usr/local/maven
+RUN wget -qO- http://mirrors.ibiblio.org/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz | tar xz -C /usr/local \
+  && ln -s /usr/local/apache-maven-3.2.5 /usr/local/maven \
+  && ln -s /usr/local/maven/bin/mvn /usr/local/bin/mvn
 
 COPY e /
 ENTRYPOINT ["/e"]
