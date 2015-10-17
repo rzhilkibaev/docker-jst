@@ -17,6 +17,6 @@ else
     cd /opt/jrs
 
     # run jst
-    jst $@ --env=ci
+    jst $@ --env=ci --verbose
 fi
 
