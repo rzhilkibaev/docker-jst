@@ -26,6 +26,23 @@ RUN wget -qO- http://mirrors.ibiblio.org/apache/maven/maven-3/3.2.5/binaries/apa
   && ln -s /usr/local/maven/bin/mvn /usr/local/bin/mvn
 
 COPY e /
+
+RUN groupadd jst --gid=1000 && useradd -g jst --uid=1000 jst
+RUN mkdir /home/jst && chown jst:jst /home/jst
+RUN mkdir -p /opt/jrs && chown jst:jst /opt/jrs
+
+RUN mkdir -p /home/jst/bin && chown jst:jst /home/jst/bin
+
+# create a symlink to jst (downloaded later, see the entrypoint)
+RUN ln -s /home/jst/bin/jst /usr/local/bin/jst
+
+COPY install-jst.sh /home/jst/
+RUN chown jst:jst /home/jst/install-jst.sh
+
+WORKDIR /opt/jrs
+
+USER jst
+
 ENTRYPOINT ["/e"]
 
 CMD ["--help"]
